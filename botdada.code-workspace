@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../bot_finetune"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "botdada"
+	}
+}

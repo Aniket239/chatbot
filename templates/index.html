@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jain Group Bot</title>
+    <!-- Add CSS and JavaScript here if needed -->
+</head>
+<body>
+    <h1>Jain Group Bot</h1>
+    <form id="chat-form">
+        <input type="text" id="phone_number" name="phone_number" placeholder="Phone Number" required>
+        <textarea id="user_input" name="user_input" placeholder="Your Message" required></textarea>
+        <button type="submit">Send</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('chat-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var phone_number = document.getElementById('phone_number').value;
+            var user_input = document.getElementById('user_input').value;
+
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'phone_number=' + encodeURIComponent(phone_number) + '&user_input=' + encodeURIComponent(user_input)
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -2938,5 +2938,19 @@
             "Bot: Dream Gurukul is a unique child-centric residential project with multiple G+7 towers, offering homes designed to make your child the next superstar. It has tied up with renowned gurus to provide guidance in Indian Classical Singing, Football, Indian Classical Dance, and Painting. The project offers a wide range of amenities, including dedicated areas for music, dance, and painting, a multi-sport playing field, luxurious club, indoor swimming pool, and much more. When would you like to schedule a site visit?\n\n"
         ],
         "status": "qualified"
+    },
+    "ojego": {
+        "log": [
+            "User: hi\n",
+            "Bot: Thank you for showing interest in Dream Gurukul! Are you interested in buying a flat? \ud83c\udfe1\n\n"
+        ],
+        "status": "enquiry"
+    },
+    "ldnfljb": {
+        "log": [
+            "User: hi\n",
+            "Bot: Hello! Thank you for showing interest in Dream Gurukul! Are you interested in buying a flat? \ud83c\udfe1\n\n"
+        ],
+        "status": "enquiry"
     }
 }

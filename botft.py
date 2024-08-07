@@ -8,21 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 
-# Load context from JSON
-with open("content.json", "r") as file:
-    data = json.load(file)
-
-# Extract relevant data and convert to context string
-purpose = json.dumps(data['purpose'], indent=2)
-project_info = json.dumps(data['project_info'], indent=2)
-contact_details = json.dumps(data['contact_details'], indent=2)
-instructions = ' '.join(data['instructions'])
-restrictions = ' '.join(data['restrictions'])
-jain_group_info = json.dumps(data['Jain Group Info'], indent=2)
-
-# Construct the bot's context with the provided details
-context = f"purpose: {purpose}\n\nProject Info: {project_info}\n\nContact Details: {contact_details}\n\nInstructions: {instructions}\n\nRestrictions: {restrictions}\n\nJain Group Info: {jain_group_info}"
-
 # Session management
 sessions = {}
 
@@ -63,9 +48,8 @@ def CustomChatGPT(phone_number, user_input):
 
     # Extract past messages from conversation history for the API call
     messages = [
-        {"role": "system", "content": "You are a developer of Jain Group, your purpose is to talk with the customers and understand their needs, then book a site visit if they haven't, if they have visited the site then try to sell a flat "},
-        {"role": "system", "content": context},
-        {"role": "assistant", "content": ""}
+        {"role": "system", "content": "You are a salesman of Jain Group, your purpose is to talk with the customers and understand their needs, then book a site visit if they haven't, if they have visited the site then try to sell a flat "},
+        {"role": "assistant", "content": "Welcome to Dream Gurukul, a unique residential project where homes are crafted to foster the next generation of superstars. As I can see you have shown interest in our Dream Gurukul project. Tell me about your preferences and budget"}
     ]
 
     for idx, msg in enumerate(conversation_history):
@@ -77,15 +61,14 @@ def CustomChatGPT(phone_number, user_input):
     messages.append({"role": "user", "content": user_input})
 
     # List of models in the order you want to use
-    models = ["gpt-3.5-turbo","gpt-3.5-turbo-16k"]
+    models = ["ft:gpt-3.5-turbo-0613:personal::8DQhMpPn"]
     ChatGPT_reply = ""
 
     for model_name in models:
         try:
             response = openai.ChatCompletion.create(
                 model=model_name,
-                messages=messages,
-                temperature=0.5
+                messages=messages
             )
             print(messages)
             print(response)
@@ -100,22 +83,13 @@ def CustomChatGPT(phone_number, user_input):
     save_sessions()
     return ''.join(conversation_history[-6:])  # Returning only the last 3 exchanges for brevity
 
-def clear_input_js():
-    return """
-    function clearInput() {
-        document.querySelector('input[name="Phone Number"]').value = '';
-        document.querySelector('textarea[name="Ask our Broker"]').value = '';
-    }
-    document.querySelector('button[type="submit"]').addEventListener('click', clearInput);
-    """
 
 demo = gr.Interface(
     fn=CustomChatGPT,
     inputs=["text", "text"],
     outputs="text",
     title="Jain Group Bot",
-    input_labels=["Phone Number", "User Input"],
-    javascript=clear_input_js()  # Inject the custom JavaScript
+    input_labels=["Phone Number", "Ask our Broker"],
 )
 
 demo.launch(share=True)
